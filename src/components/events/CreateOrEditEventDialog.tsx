@@ -19,8 +19,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const EventSchema = z.object({
     title: z.string().min(1).max(255),
     description: z.string().min(1),
-    start_date: z.string().min(1).max(100),
-    end_date: z.string().min(1).max(100),
+    start_date: z.date(),
+    end_date: z.date(),
     location: z.string().min(1).max(100)
 });
 
@@ -68,8 +68,8 @@ export default function CreateOrEditEventDialog({ id, closeDialog }: EventDialog
         if (data) {
             setValue("title", data.title);
             setValue("description", data.description);
-            setValue("start_date", data.start_date);
-            setValue("end_date", data.end_date);
+            setValue("start_date", new Date(data.start_date));
+            setValue("end_date", new Date(data.end_date));
             setValue("location", data.location);
         }
     }, [data]);
@@ -121,7 +121,21 @@ export default function CreateOrEditEventDialog({ id, closeDialog }: EventDialog
                                 name="start_date"
                                 control={control}
                                 render={({ field }) => (
-                                    <Calendar className="w-full" value={field.value ? new Date(field.value) : null} onChange={(e) => field.onChange(e.value?.toISOString())} />
+                                    <Calendar 
+                                        className="w-full"
+                                        dateFormat="yy-mm-dd"
+                                        value={field.value}
+                                        onChange={(e) => {
+                                            const day = e.value?.getDate() ?? 1;
+                                            const month = e.value?.getMonth() ?? 1;
+                                            const year = e.value?.getFullYear() ?? 2000;
+                                            e.value?.setUTCHours(0);
+                                            e.value?.setDate(day);
+                                            e.value?.setMonth(month);
+                                            e.value?.setFullYear(year);
+                                            field.onChange(e.value);
+                                        }}
+                                    />
                                 )}
                             />
                             <label htmlFor="start_date">Start date</label>
@@ -134,7 +148,21 @@ export default function CreateOrEditEventDialog({ id, closeDialog }: EventDialog
                                 name="end_date"
                                 control={control}
                                 render={({ field }) => (
-                                    <Calendar className="w-full" value={field.value ? new Date(field.value) : null} onChange={(e) => field.onChange(e.value?.toISOString())} />
+                                    <Calendar
+                                        className="w-full"
+                                        dateFormat="yy-mm-dd"
+                                        value={field.value}
+                                        onChange={(e) => {
+                                            const day = e.value?.getDate() ?? 1;
+                                            const month = e.value?.getMonth() ?? 1;
+                                            const year = e.value?.getFullYear() ?? 2000;
+                                            e.value?.setUTCHours(0);
+                                            e.value?.setDate(day);
+                                            e.value?.setMonth(month);
+                                            e.value?.setFullYear(year);
+                                            field.onChange(e.value);
+                                        }}
+                                    />
                                 )}
                             />
                             <label htmlFor="end_date">End date</label>
