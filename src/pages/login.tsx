@@ -14,6 +14,9 @@ import Image from "next/image";
 import { login } from "@/lib/api/auth";
 import { useLocalStorage } from "usehooks-ts";
 import { TokenLocalStorage } from "@/lib/interfaces";
+import { useRouter } from "next/router";
+import { useQueryClient } from "@tanstack/react-query";
+import Logo from "@/components/common/Logo";
 
 const LoginFormSchema = z.object({   
     email: z.string().email().max(255),
@@ -24,6 +27,9 @@ type LoginForm = z.infer<typeof LoginFormSchema>;
 
 export default function Login() {
     
+    const router = useRouter();
+    const client = useQueryClient();
+
     const [_, saveToken] = useLocalStorage<TokenLocalStorage>("token", null);
 
     const toastRef = useRef<Toast>(null);
@@ -35,9 +41,11 @@ export default function Login() {
         mutationFn: login,
         onSuccess: (data) => {
             saveToken({
-                token: data.token
+                token: data.token,
             });
+            client.invalidateQueries();
             toastRef.current?.show({ severity: "success", summary: "Success", detail: "Login successful" });
+            router.push("/listings");
         },
         onError: (error: AxiosError) => {
             
@@ -47,11 +55,12 @@ export default function Login() {
     const doLogin: SubmitHandler<LoginForm> = (data) => {
         mutate(data);
     }
+
     return (
         <div>
             <div className="p-10 mx-auto w-11/12 max-w-6xl flex items-center gap-32">
                 <div>
-                    <Image className="text-primary" src="/logo.svg" width={500} height={500} alt="RevvedUp" />    
+                    <Logo className="text-primary" />
                 </div>    
                 <div className="grow">
                     <Toast ref={toastRef} />
@@ -72,7 +81,8 @@ export default function Login() {
                             </FloatLabel>
                             { errors.password?.message && <p className="mt-2 text-xs text-red-400">{errors.password?.message}</p>}
                         </div>
-                        <Button className="w-full" label={isPending ? "Logging in..." : "Login"} type="submit" disabled={isPending} />
+                        <Button className="w-full" label={isPending ? "Logging in..." : "Login"} type="submit" loading={isPending} />
+                        <Button className="w-full" size="small" link label="Don't have an account?" onClick={() => router.push("/register")} />
                     </form>
                 </div>
             </div>
