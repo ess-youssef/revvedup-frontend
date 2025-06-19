@@ -184,8 +184,8 @@ export default function CreateOrEditVehicle({ id }: CreateOrEditVehicleProps) {
                     <p className="text-gray-600">
                         {/* TODO: Replace with new GPT data */}
                         <strong>Model:</strong> Specify the exact model of your vehicle.<br />
-                        <strong>Mileage:</strong> Provide the manufacturer's name.<br />
-                        <strong>Year:</strong> Indicate the vehicle's year of manufacture.<br />
+                        <strong>Mileage:</strong> Provide the manufacturer&apos;s name.<br />
+                        <strong>Year:</strong> Indicate the vehicle&apos;s year of manufacture.<br />
                         <strong>Description:</strong> Offer a detailed and honest description, highlighting key features and any recent updates or repairs.<br />
                     </p>
                     <Errors error={error} />

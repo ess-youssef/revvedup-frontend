@@ -13,7 +13,7 @@ export default function Errors({ error }: ErrorsProps) {
                     ? <li className="ml-5">{error.response?.data?.message}</li>
                     : Object.keys(error.response?.data?.errors).map((key) => {
                         return error.response?.data.errors[key].map((error: string) => (
-                            <li className="ml-5">{error}</li>
+                            <li key={error} className="ml-5">{error}</li>
                         ))
                     })
                 }

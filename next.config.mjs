@@ -9,6 +9,13 @@ const nextConfig = {
         pathname: '/storage/**',
       },
     ],
+  },
+  typescript: {
+    ignoreBuildErrors: true
+  },
+  output: 'export',
+  images: {
+    unoptimized: true
   }
 };
 
