@@ -95,7 +95,7 @@ export default function CreateOrEditListing({ id }: CreateOrEditListingProps) {
                 <div className="basis-1/2">
                     <h1 className="text-gray-900 font-bold text-3xl !mt-0 mb-5">{ id ? "Edit" : "New " } listing</h1>
                     <p className="text-gray-600">
-                        <strong>Price:</strong> Set a competitive price based on market trends and the car's specifics.<br />
+                        <strong>Price:</strong> Set a competitive price based on market trends and the car&apos;s specifics.<br />
                         <strong>Mileage:</strong> Clearly state the car&apos;s mileage to indicate its usage and condition.<br />
                         <strong>Description:</strong> Provide a detailed and honest description, highlighting key features and any recent updates or repairs.<br />
                     </p>
