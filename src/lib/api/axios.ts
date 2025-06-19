@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:8000/api";
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
 axios.interceptors.request.use((config) => {
     const value = localStorage.getItem("token");
     if (value) {
