@@ -2,7 +2,7 @@ import { User } from "@/lib/interfaces";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export function getImagePath(imagePath: string) {
-  return process.env.NEXT_PUBLIC_API_URL + "/" + imagePath.replace("public/", "storage/");
+  return process.env.NEXT_PUBLIC_API_URL + "/storage/" + imagePath.replace("public/", "storage/");
 }
 
 export function getFullName(user: User) {
